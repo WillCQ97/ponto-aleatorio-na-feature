@@ -1,3 +1,7 @@
+'''
+    PROMPT 1: Como obter um ponto aleatório que esteja dentro de uma geometria, considerando que a feição esteja armazenada em um arquivo geojson?
+'''
+
 import geopandas as gpd
 from shapely.geometry import shape, Point
 import random
