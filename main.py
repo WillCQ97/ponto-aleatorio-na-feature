@@ -1,5 +1,6 @@
 '''
     PROMPT 1: Como obter um ponto aleatório que esteja dentro de uma geometria, considerando que a feição esteja armazenada em um arquivo geojson?
+    PROMPT 2: troque o código para ao invés de selecionar uma geometria randômica, obtenha um ponto aleatório para todas as feature de uma featurecollection
 '''
 
 import geopandas as gpd
@@ -10,17 +11,19 @@ import random
 file_path = 'caminho/do/seu/arquivo.geojson'
 gdf = gpd.read_file(file_path)
 
-# Selecione uma geometria aleatória do GeoDataFrame
-random_index = random.randint(0, len(gdf) - 1)
-random_geometry = gdf['geometry'].iloc[random_index]
+# Função para gerar um ponto aleatório dentro de uma geometria
+def generate_random_point(geometry):
+    minx, miny, maxx, maxy = geometry.bounds
+    while True:
+        x = random.uniform(minx, maxx)
+        y = random.uniform(miny, maxy)
+        point = Point(x, y)
+        if point.within(geometry):
+            return point
 
-# Gere um ponto aleatório dentro da geometria
-minx, miny, maxx, maxy = random_geometry.bounds
-while True:
-    x = random.uniform(minx, maxx)
-    y = random.uniform(miny, maxy)
-    point = Point(x, y)
-    if point.within(random_geometry):
-        break
+# Adicione uma coluna 'random_point' ao GeoDataFrame com pontos aleatórios
+gdf['random_point'] = gdf['geometry'].apply(generate_random_point)
 
-print(f'Ponto aleatório dentro da geometria: {point}')
+# Exiba o GeoDataFrame resultante
+print(gdf[['geometry', 'random_point']])
+
