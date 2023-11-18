@@ -71,8 +71,6 @@ for key, value in geojsons_unidades.items():
         local_zona = int(gdf['zona'].iloc[index]) if str(gdf['zona'].iloc[index]) != 'nan' else 'null'
 
         geometry = gdf['geometry'].iloc[index]
-
         point = '\'' + str(get_random_point(geometry)) + '\''
-
         print(f'({local_id}, {local_pri}, {local_sec}, {local_ter}, {local_zona}, {point}, \'{value}\', {key}),')
 
