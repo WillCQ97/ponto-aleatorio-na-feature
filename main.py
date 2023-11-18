@@ -74,5 +74,5 @@ for key, value in geojsons_unidades.items():
 
         point = '\'' + str(get_random_point(geometry)) + '\''
 
-        print(f'({local_id}, {local_pri}, {local_sec}, {local_ter}, {local_zona}, {point}, \'{value}\', \'{key}\'),')
+        print(f'({local_id}, {local_pri}, {local_sec}, {local_ter}, {local_zona}, {point}, \'{value}\', {key}),')
 
