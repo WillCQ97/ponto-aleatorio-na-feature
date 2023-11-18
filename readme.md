@@ -7,7 +7,10 @@
 - O código inicial foi gerado com uso do chatGPT. A versão final foi manualmente alterada com base nas versões geradas pelo chat.
 - Execução utilizando `Python 3.11.5` e as bibliotecas `geopandas` e `shapely`. Foi criado um ambiente com uso do `miniconda` e usado o `pip` para instalação das bibliotecas.
 
+  - `conda create --name geopandas python=3.11`
+  - `conda activate geopandas`
   - `pip install geopandas shapely`
+  - `python main.py > output/insert.sql`
 
 - O objetivo foi a geração de pontos para marcar os locais presentes nas unidades da UFES, sendo os quatro _campi_ mais algumas áreas experimentais.
 - Para tal foram utilizadas os arquivos json do mapeamento das unidades feito pela equipe de prodesing:
