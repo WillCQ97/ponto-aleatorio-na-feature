@@ -3,7 +3,7 @@
     PROMPT 2: troque o código para ao invés de selecionar uma geometria randômica, obtenha um ponto aleatório para todas as feature de uma featurecollection
 '''
 import geopandas as gpd
-from shapely.geometry import shape, Point
+from shapely.geometry import Point
 import random
 
 
@@ -20,6 +20,14 @@ def generate_random_point(geometry):
         if point.within(geometry):  # exceção se a geometria for multipolygon
             return point
 
+
+def clean_atributes(gdf, attribute):
+    value = gdf[attribute].iloc[index]
+
+    if not value or value == 'None':
+        return 'null'
+    else:
+        return '\'' + value.strip() + '\''
 
 geojsons_unidades = {
     1: 'alegre.json',
@@ -44,17 +52,20 @@ for key, value in geojsons_unidades.items():
     for index in range(0, len(gdf) - 1):
 
         local_id = gdf['idd'].iloc[index]
-        local_pri = gdf['primario'].iloc[index]
-        local_sec = gdf['secundario'].iloc[index]
-        local_ter = gdf['terciario'].iloc[index]
-        local_zona = gdf['zona'].iloc[index]
+        local_pri = clean_atributes(gdf, 'primario')
+        local_sec = clean_atributes(gdf, 'secundario')
+        local_ter = clean_atributes(gdf, 'terciario')
+
+        # converte para inteiro alguns valores que estava em float, exceto quando o valor é um NaN
+        # como não consegui comparar diretamente com o valor NaN converti para string e fiz a comparação
+        local_zona = int(gdf['zona'].iloc[index]) if str(gdf['zona'].iloc[index]) != 'nan' else 'null'
 
         geometry = gdf['geometry'].iloc[index]
         if geometry.geom_type == 'Polygon':
-            point = generate_random_point(geometry)
+            point = '\'' + str(generate_random_point(geometry)) + '\''
 
         else:
             point = 'null'
 
-        print(f'(\'{local_id}\', \'{local_pri}\', \'{local_sec}\', \'{local_ter}\', {local_zona}, \'{point}\', \'{value}\', \'{key}\')')
+        print(f'({local_id}, {local_pri}, {local_sec}, {local_ter}, {local_zona}, {point}, \'{value}\', \'{key}\')')
 
