@@ -1,7 +1,3 @@
-'''
-    PROMPT 1: Como obter um ponto aleatório que esteja dentro de uma geometria, considerando que a feição esteja armazenada em um arquivo geojson?
-    PROMPT 2: troque o código para ao invés de selecionar uma geometria randômica, obtenha um ponto aleatório para todas as feature de uma featurecollection
-'''
 import geopandas as gpd
 from shapely.geometry import Point
 import random
@@ -11,14 +7,26 @@ def generate_random_point(geometry):
     # Gere um ponto aleatório dentro da geometria
     minx, miny, maxx, maxy = geometry.bounds
 
-    random.seed(1)
     while True:
         x = random.uniform(minx, maxx)
         y = random.uniform(miny, maxy)
         point = Point(x, y)
-        
-        if point.within(geometry):  # exceção se a geometria for multipolygon
+
+        if point.within(geometry):  # resulta em exceção se a geometria for multipolygon
             return point
+
+
+def get_random_point(geometry):
+    # Função para obter um ponto aleatório dentro de uma geometria (suporta MultiPolygon)
+    random.seed(1) # semente para manter o mesmo resultado entre execuções
+
+    if geometry.geom_type == 'Polygon':
+        return generate_random_point(geometry)
+    elif geometry.geom_type == 'MultiPolygon':
+        polygon = random.choice(geometry.geoms)
+        return generate_random_point(polygon)
+    else:
+        raise ValueError(f"Tipo de geometria não suportado: {geometry.geom_type}")
 
 
 def clean_atributes(gdf, attribute):
@@ -28,6 +36,7 @@ def clean_atributes(gdf, attribute):
         return 'null'
     else:
         return '\'' + value.strip() + '\''
+
 
 geojsons_unidades = {
     1: 'alegre.json',
@@ -49,6 +58,7 @@ for key, value in geojsons_unidades.items():
 
     # Selecione uma geometria aleatória do GeoDataFrame
     print()
+    print('--' + value)
     for index in range(0, len(gdf) - 1):
 
         local_id = gdf['idd'].iloc[index]
@@ -61,11 +71,8 @@ for key, value in geojsons_unidades.items():
         local_zona = int(gdf['zona'].iloc[index]) if str(gdf['zona'].iloc[index]) != 'nan' else 'null'
 
         geometry = gdf['geometry'].iloc[index]
-        if geometry.geom_type == 'Polygon':
-            point = '\'' + str(generate_random_point(geometry)) + '\''
 
-        else:
-            point = 'null'
+        point = '\'' + str(get_random_point(geometry)) + '\''
 
-        print(f'({local_id}, {local_pri}, {local_sec}, {local_ter}, {local_zona}, {point}, \'{value}\', \'{key}\')')
+        print(f'({local_id}, {local_pri}, {local_sec}, {local_ter}, {local_zona}, {point}, \'{value}\', \'{key}\'),')
 
