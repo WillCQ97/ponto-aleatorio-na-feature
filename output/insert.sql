@@ -1,4 +1,4 @@
-INSERT INTO public.tb_locais(idd, primario, secundario, terciario, zona, localizacao, filename, id_unidade) VALUES 
+INSERT INTO public.tb_locais(idd, nome_principal, nome_secundario, nome_terciario, zona, localizacao, filename, id_unidade) VALUES 
 
 --alegre.json
 (1, 'Anatomia Animal', null, null, 4, 'POINT (-41.53689213264011 -20.760946335933134)', 'alegre.json', 1),

@@ -48,7 +48,7 @@ geojsons_unidades = {
 #    8: 'sao_jose_do_calcado.geojson'
 }
 
-print('INSERT INTO public.tb_locais(idd, primario, secundario, terciario, zona, localizacao, filename, id_unidade) VALUES ')
+print('INSERT INTO public.tb_locais(idd, nome_principal, nome_secundario, nome_terciario, zona, localizacao, filename, id_unidade) VALUES ')
 
 for key, value in geojsons_unidades.items():
     
