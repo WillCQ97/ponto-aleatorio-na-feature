@@ -300,3 +300,18 @@ INSERT INTO public.tb_locais(idd, nome_principal, nome_secundario, nome_terciari
 --(18, 'Caixa D'água 2', null, null, 5, 'POINT (-41.38900159364492 -20.790306878397413)', 'jeronimo_monteiro.json', 6),
 --(None, null, null, null, null, 'POINT (-41.38900159364492 -20.790306878397413)', 'jeronimo_monteiro.json', 6)
 ;
+
+
+--sao_jose_do_calcado.geojson
+
+INSERT INTO public.tb_locais(idd, nome_principal, nome_secundario, nome_terciario, zona, localizacao, filename, id_unidade) VALUES 
+(1, 'Curral', NULL, NULL, NULL, 'POINT (-41.64930438514705 -21.063500534985284)', 'sao_jose_do_calcado.geojson', 8),
+(2, 'Laboratório de Reprodução Animal', NULL, NULL, NULL, 'POINT (-41.649189133681084 -21.06368108651231)', 'sao_jose_do_calcado.geojson', 8),
+(3, 'Fábrica de Ração', NULL, NULL, NULL, 'POINT (-41.6492461878712 -21.063866590029143)', 'sao_jose_do_calcado.geojson', 8),
+(4, 'Laboratório de Pisicultura', NULL, NULL, NULL, 'POINT (-41.64813950460039 -21.064070935228344)', 'sao_jose_do_calcado.geojson', 8),
+(5, 'Renário', NULL, NULL, NULL, 'POINT (-41.64834138783531 -21.0643484627025)', 'sao_jose_do_calcado.geojson', 8),
+(6, 'Residência desativada', NULL, NULL, NULL, 'POINT (-41.64745761213921 -21.063772482361728)', 'sao_jose_do_calcado.geojson', 8),
+(7, 'Residência desativada', NULL, NULL, NULL, 'POINT (-41.64765054416356 -21.064368731736618)', 'sao_jose_do_calcado.geojson', 8),
+(8, 'Posto de vigilância', NULL, NULL, NULL, 'POINT (-41.647982772061646 -21.064898802639693)', 'sao_jose_do_calcado.geojson', 8),
+(9, 'Galpões de avicultura de corte e postura', NULL, NULL, NULL, 'POINT (-41.64756524907345 -21.066864698618666)', 'sao_jose_do_calcado.geojson', 8)
+;

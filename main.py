@@ -39,13 +39,13 @@ def clean_atributes(gdf, attribute):
 
 
 geojsons_unidades = {
-    1: 'alegre.json',
-    2: 'goiabeiras.json',
-    3: 'maruipe.json',
-    4: 'sao_mateus.json',
-    5: 'rive.json',
-    6: 'jeronimo_monteiro.json',
-#    8: 'sao_jose_do_calcado.geojson'
+#    1: 'alegre.json',
+#    2: 'goiabeiras.json',
+#    3: 'maruipe.json',
+#    4: 'sao_mateus.json',
+#    5: 'rive.json',
+#    6: 'jeronimo_monteiro.json',
+    8: 'sao_jose_do_calcado.geojson'
 }
 
 print('INSERT INTO public.tb_locais(idd, nome_principal, nome_secundario, nome_terciario, zona, localizacao, filename, id_unidade) VALUES ')
@@ -61,14 +61,14 @@ for key, value in geojsons_unidades.items():
     print('--' + value)
     for index in range(0, len(gdf) - 1):
 
-        local_id = gdf['idd'].iloc[index]
+        local_id = gdf['id'].iloc[index] #gdf['idd'].iloc[index]
         local_pri = clean_atributes(gdf, 'primario')
-        local_sec = clean_atributes(gdf, 'secundario')
-        local_ter = clean_atributes(gdf, 'terciario')
+        local_sec = 'NULL' #clean_atributes(gdf, 'secundario')
+        local_ter = 'NULL' #clean_atributes(gdf, 'terciario')
 
         # converte para inteiro alguns valores que estava em float, exceto quando o valor é um NaN
         # como não consegui comparar diretamente com o valor NaN converti para string e fiz a comparação
-        local_zona = int(gdf['zona'].iloc[index]) if str(gdf['zona'].iloc[index]) != 'nan' else 'null'
+        local_zona = 'NULL' #int(gdf['zona'].iloc[index]) if str(gdf['zona'].iloc[index]) != 'nan' else 'null'
 
         geometry = gdf['geometry'].iloc[index]
         point = '\'' + str(get_random_point(geometry)) + '\''
